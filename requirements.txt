@@ -6,5 +6,4 @@ seaborn
 pydeck
 datetime
 plotly
-re
 random
