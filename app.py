@@ -12,6 +12,8 @@ import re
 import random
 from plotly.subplots import make_subplots
 import matplotlib.gridspec as gridspec
+import os
+from intro_to_flask import app
 
 #plot style
 plt.style.use("ggplot")
@@ -749,3 +751,5 @@ def _max_width_():
     )
 #_max_width_()
 
+port = int(os.environ.get("PORT", 5000))
+app.run(debug=True, host='0.0.0.0', port=port)
