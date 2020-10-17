@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib.pyplot
+streamlit
+seaborn
+pydeck
+datetime
+plotly.express
+plotly.graph_objects
+re
+random
+plotly.subplots
+matplotlib.gridspec
