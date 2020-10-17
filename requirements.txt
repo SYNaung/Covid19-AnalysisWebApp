@@ -1,13 +1,10 @@
 pandas
 numpy
-matplotlib.pyplot
+matplotlib
 streamlit
 seaborn
 pydeck
 datetime
-plotly.express
-plotly.graph_objects
+plotly
 re
 random
-plotly.subplots
-matplotlib.gridspec
