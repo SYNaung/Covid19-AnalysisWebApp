@@ -12,7 +12,6 @@ import re
 import random
 from plotly.subplots import make_subplots
 import matplotlib.gridspec as gridspec
-import os
 
 #plot style
 plt.style.use("ggplot")
