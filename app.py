@@ -13,7 +13,7 @@ import random
 from plotly.subplots import make_subplots
 import matplotlib.gridspec as gridspec
 import os
-from intro_to_flask import app
+
 
 #plot style
 plt.style.use("ggplot")
