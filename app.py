@@ -29,8 +29,8 @@ pc_user = st.sidebar.checkbox("Show interactive graphs (recommended for pc users
 #st.sidebar.audio(playlist[song_no])
 
 #Map
-url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9GWlx9wsSxy253wGLjRqq79cQ1n4_X5N4dx6JemV7evq3DeGXSDdpnu4M9K4Rceujw3rt_CJRS5aD/pub?output=csv"
-#url = "Case by Township - MMR-COVID19 - Sheet1.csv"
+#url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9GWlx9wsSxy253wGLjRqq79cQ1n4_X5N4dx6JemV7evq3DeGXSDdpnu4M9K4Rceujw3rt_CJRS5aD/pub?output=csv"
+url = "Case by Township - MMR-COVID19 - Sheet1.csv"
 covid = pd.read_csv(url)
 
 drop_list = ['Objectidfieldname','Uniqueidfield Name','Uniqueidfield Issystemmaintained',
