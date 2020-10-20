@@ -694,8 +694,8 @@ elif xaxis_select == "GDP per capita and Death rate":
     death_gdp_fig = sns.regplot(y=np.log(death_corr_df["Max death rates"]), x=death_corr_df["Logged GDP per capita"], scatter_kws={'alpha':0.5})
     death_gdp_fig.set_xlabel("GDP per capita(Economic output per person)", fontsize=9)
     death_gdp_fig.set_ylabel("Max death rates of countries", fontsize=9)
-    st.markdown("Countries with higher GDP (More developed countries) have higher death rate due to Covid-19.")
     st.pyplot()
+    st.markdown("Countries with higher GDP (More developed countries) have higher death rate due to Covid-19.")
 else:
     corr_fig = sns.regplot(y=np.log(corr_df["Max infection rates"]), x=corr_df[xaxis_select], scatter_kws={'alpha':0.5})
     corr_fig.set_xlabel(xaxis_select,fontsize=9)
