@@ -689,7 +689,7 @@ if xaxis_select == "Conflict cases and Covid-19":
         st.pyplot()
 
     st.markdown("#### According to the figure,")
-    st.markdown("Generally, conflict rate stays the same regardless of Covid-19 infection rate.")
+    st.markdown("Generally, conflict rate stays the same, regardless of Covid-19 infection rate.")
 elif xaxis_select == "GDP per capita and Death rate":
     death_gdp_fig = sns.regplot(y=np.log(death_corr_df["Max death rates"]), x=death_corr_df["Logged GDP per capita"], scatter_kws={'alpha':0.5})
     death_gdp_fig.set_xlabel("GDP per capita(Economic output per person)", fontsize=9)
