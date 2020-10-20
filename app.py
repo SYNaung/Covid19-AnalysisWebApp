@@ -14,19 +14,40 @@ from plotly.subplots import make_subplots
 import matplotlib.gridspec as gridspec
 import os
 
-
 #plot style
 plt.style.use("ggplot")
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 #pc or mobile
 pc_user = st.sidebar.checkbox("Show interactive graphs (recommended for pc users)", value=False)
 
 #music
+playlist = ["playlist/Aerosmith - I don't want to miss a thing.mp3",
+            "playlist/Clairo, Peter Cottontale - Softly.mp3",
+            "playlist/Harry Styles - Carolina.mp3",
+            "playlist/Kings of Convenience - Boat Behind.mp3",
+            "playlist/Kiss - I Was Made For Lovin' You.mp3",
+            "playlist/Leonard Cohen - The Future.flac",
+            "playlist/My Chemical Romance - Helena.mp3",
+            "playlist/Oasis - Live Forever.mp3",
+            "playlist/Pink Floyd - Coming Back To Life.flac",
+            'playlist/Simon & Garfunkel - El Condor Pasa (If I Could).mp3',
+            "playlist/Arcitc Monkeys - Old Yellow Bricks.mp3",
+            "playlist/Beastie Boys - Sabotage.mp3",
+            "playlist/Derek & The Dominos - Layla.mp3",
+            "playlist/Fleetwood Mac - Dreams.mp3",
+            "playlist/John Paesano -  Subway Feels.mp3",
+            "playlist/My Chemical Romance - Party Poison.mp3",
+            "playlist/Paramore - Hard Times.mp3",
+            "playlist/Red Hot Chili Peppers - Can't Stop.mp3",
+            "playlist/The Alan Parsons Project - Eye in the Sky.mp3",
+            "playlist/The Rolling Stones - Miss You.mp3"]
+st.sidebar.markdown("### You can listen to music while scrolling!")
 
+song_no = random.randint(0,19)
+st.sidebar.text(re.sub("playlist/","",playlist[song_no]))
+st.sidebar.audio(playlist[song_no])
 
-#song_no = random.randint(0,19)
-#st.sidebar.text(re.sub("playlist/","",playlist[song_no]))
-#st.sidebar.audio(playlist[song_no])
 
 #Map
 url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9GWlx9wsSxy253wGLjRqq79cQ1n4_X5N4dx6JemV7evq3DeGXSDdpnu4M9K4Rceujw3rt_CJRS5aD/pub?output=csv"
