@@ -77,6 +77,17 @@ confirmedMM = data_loader(confirmed_url)
 recoveredMM = data_loader(recovered_url)
 deathMM = data_loader(death_url)
 
+#date convert
+def global_date_convert(df):
+    df["Date"] = pd.to_datetime(df["Date"])
+    df["Date"] = df["Date"].dt.strftime("%d/%m/%y")
+    return df
+
+#date convert..again. gosh so many.
+confirmedMM = global_date_convert(confirmedMM)
+recoveredMM = global_date_convert(recoveredMM)
+deathMM = global_date_convert(deathMM)
+
 #Today
 today_confirmed = (confirmedMM["Cases"][len(confirmedMM["Cases"])-1]) - (confirmedMM["Cases"][len(confirmedMM["Cases"])-2])
 today_recovered = (recoveredMM["Cases"][len(recoveredMM["Cases"])-1]) - (recoveredMM["Cases"][len(recoveredMM["Cases"])-2])
@@ -308,15 +319,6 @@ def view_in_2D():
 
 #LET'S GOOOOOOOOO
 st.subheader("Statistics")
-
-#date convert
-def global_date_convert(df):
-    df["Date"] = pd.to_datetime(df["Date"])
-    df["Date"] = df["Date"].dt.strftime("%d/%m/%y")
-    return df
-
-#date convert..again. gosh so many.
-confirmedMM = global_date_convert(confirmedMM)
 
 #analysis_df = cov[["Features Attributes Sr", "Features Attributes Township", "Datetime", "Features Attributes Confirmed"]]
 #analysis_df = analysis_df.sort_values(by="Datetime")
