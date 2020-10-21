@@ -15,12 +15,75 @@ import matplotlib.gridspec as gridspec
 
 #plot style
 plt.style.use("ggplot")
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
 #pc or mobile
 pc_user = st.sidebar.checkbox("Show interactive graphs (recommended for pc users)", value=False)
 
+#music
+playlist = ["playlist/Aerosmith - I don't want to miss a thing.mp3",
+            "playlist/Clairo, Peter Cottontale - Softly.mp3",
+            "playlist/Harry Styles - Meet Me In The Hallway.mp3",
+            "playlist/Kings of Convenience - Boat Behind.mp3",
+            "playlist/Kiss - I Was Made For Lovin' You.mp3",
+            "playlist/Leonard Cohen - The Future.mp3",
+            "playlist/My Chemical Romance - Helena.mp3",
+            "playlist/Oasis - Live Forever.mp3",
+            "playlist/Pink Floyd - Coming Back To Life.mp3",
+            'playlist/Simon & Garfunkel - El Condor Pasa (If I Could).mp3',
+            "playlist/Arcitc Monkeys - Old Yellow Bricks.mp3",
+            "playlist/Beastie Boys - Sabotage.mp3",
+            "playlist/Derek & The Dominos - Layla.mp3",
+            "playlist/Fleetwood Mac - Dreams.mp3",
+            "playlist/John Paesano -  Subway Feels.mp3",
+            "playlist/My Chemical Romance - Party Poison.mp3",
+            "playlist/Paramore - Hard Times.mp3",
+            "playlist/Red Hot Chili Peppers - Can't Stop.mp3",
+            "playlist/The Alan Parsons Project - Eye in the Sky.mp3",
+            "playlist/The Rolling Stones - Miss You.mp3"]
+st.sidebar.markdown("### You can listen to music while scrolling!")
 
+song_no = random.randint(0,19)
+st.sidebar.text(re.sub("playlist/","",playlist[song_no]))
+st.sidebar.audio(playlist[song_no])
+
+#Header
+st.title("Covid-19 Myanmar Analysis")
+#st.markdown("###### made by a Data Science Enthusiast.")
+st.markdown("")
+
+#Hi! I came here from statistics section.
+#urls
+confirmed_url = "https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_confirmed_global.csv&filename=time_series_covid19_confirmed_global.csv"
+#confirmed_url = "time_series_covid19_confirmed_global.csv"
+recovered_url = "https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_recovered_global.csv&filename=time_series_covid19_recovered_global.csv"
+#recovered_url = "time_series_covid19_recovered_global.csv"
+death_url = "https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_deaths_global.csv&filename=time_series_covid19_deaths_global.csv"
+#death_url = "time_series_covid19_deaths_global.csv"
+
+#cleaning data for Myanmar
+def data_loader(d):
+    covid = pd.read_csv(d)
+    covid.drop(["Lat", "Long"], axis=1, inplace=True)
+    covid19 = covid.groupby("Country/Region").sum()
+    covidBurma = pd.DataFrame(covid19.loc["Burma"])
+    covidBurma.reset_index(inplace=True)
+    covidBurma.rename(columns={"index": "Date", "Burma": "Cases"}, inplace=True)
+    return covidBurma
+
+#load_data
+confirmedMM = data_loader(confirmed_url)
+recoveredMM = data_loader(recovered_url)
+deathMM = data_loader(death_url)
+
+#Today
+today_confirmed = (confirmedMM["Cases"][len(confirmedMM["Cases"])-1]) - (confirmedMM["Cases"][len(confirmedMM["Cases"])-2])
+today_recovered = (recoveredMM["Cases"][len(recoveredMM["Cases"])-1]) - (recoveredMM["Cases"][len(recoveredMM["Cases"])-2])
+today_death = (deathMM["Cases"][len(deathMM["Cases"])-1]) - (deathMM["Cases"][len(deathMM["Cases"])-2])
+st.subheader("Today")
+st.markdown("#### Cases: "+str(today_confirmed)+" , Recovered: "+str(today_recovered)+ " , Death: "+str(today_death))
+#st.markdown("#### Recovered: "+str(today_recovered))
+#st.markdown("#### Death: "+str(today_death))
+st.markdown('###')
 
 #Map
 url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9GWlx9wsSxy253wGLjRqq79cQ1n4_X5N4dx6JemV7evq3DeGXSDdpnu4M9K4Rceujw3rt_CJRS5aD/pub?output=csv"
@@ -55,8 +118,6 @@ cov.rename(columns={"Features Attributes Latitude":"latitude", "Features Attribu
 #group region names
 sr = cov.groupby(by="Features Attributes Sr").sum()
 sr_list = list(sr.index)
-st.title("Covid-19 Myanmar Status")
-st.header("Cases by Township")
 
 #for 3d map
 township_confirmed = cov[["Features Attributes Township", "Features Attributes Confirmed", "Features Attributes Sr"]]
@@ -240,38 +301,11 @@ def view_in_2D():
     st.write(map2dst)
 
 
-#select view
-township_view = st.selectbox("View:", [ "2D map", "3D map","Graph"])
-
-#display map view
-if township_view == "3D map":
-    view_in_3D()
-elif township_view == "Graph":
-    township_bar()
-else:
-    view_in_2D()
-    
-
 
 #Statistics
 
-#urls
-confirmed_url = "https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_confirmed_global.csv&filename=time_series_covid19_confirmed_global.csv"
-#confirmed_url = "time_series_covid19_confirmed_global.csv"
-recovered_url = "https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_recovered_global.csv&filename=time_series_covid19_recovered_global.csv"
-#recovered_url = "time_series_covid19_recovered_global.csv"
-death_url = "https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_deaths_global.csv&filename=time_series_covid19_deaths_global.csv"
-#death_url = "time_series_covid19_deaths_global.csv"
-
-#cleaning data for Myanmar
-def data_loader(d):
-    covid = pd.read_csv(d)
-    covid.drop(["Lat", "Long"], axis=1, inplace=True)
-    covid19 = covid.groupby("Country/Region").sum()
-    covidBurma = pd.DataFrame(covid19.loc["Burma"])
-    covidBurma.reset_index(inplace=True)
-    covidBurma.rename(columns={"index": "Date", "Burma": "Cases"}, inplace=True)
-    return covidBurma
+#LET'S GOOOOOOOOO
+st.subheader("Statistics")
 
 #date convert
 def global_date_convert(df):
@@ -279,19 +313,11 @@ def global_date_convert(df):
     df["Date"] = df["Date"].dt.strftime("%d/%m/%y")
     return df
 
-#LET'S GOOOOOOOOO
-st.header("Statistics")
-
-#load_data
-confirmedMM = data_loader(confirmed_url)
-recoveredMM = data_loader(recovered_url)
-deathMM = data_loader(death_url)
-
 #date convert..again. gosh so many.
 confirmedMM = global_date_convert(confirmedMM)
 
-analysis_df = cov[["Features Attributes Sr", "Features Attributes Township", "Datetime", "Features Attributes Confirmed"]]
-analysis_df = analysis_df.sort_values(by="Datetime")
+#analysis_df = cov[["Features Attributes Sr", "Features Attributes Township", "Datetime", "Features Attributes Confirmed"]]
+#analysis_df = analysis_df.sort_values(by="Datetime")
 
 #"Oh fuck, so repeatitive" section :(
 confirmed_last = int(confirmedMM["Cases"][-1:])
@@ -606,6 +632,20 @@ elif graph_select == "General":
             st.pyplot()
 
 
+
+st.subheader("Map")
+#select view
+township_view = st.selectbox("View:", [ "2D map", "3D map","Graph"])
+
+#display map view
+if township_view == "3D map":
+    view_in_3D()
+elif township_view == "Graph":
+    township_bar()
+else:
+    view_in_2D()
+
+
 #Analysis & Correlations
 
 #gotta read these again fuck
@@ -651,7 +691,7 @@ death_corr_df = covid_max_death.join(happiness, how="inner")
 corr_df.rename(columns={"Logged GDP per capita":"GDP per capita(Economic output per person)"}, inplace=True)
 
 #Let's gooooooo
-st.header("Analysis & Correlations")
+st.subheader("Analysis & Correlations")
 xaxis_select = st.selectbox("Choose: ", ["GDP per capita(Economic output per person)", "GDP per capita and Death rate", "Social support", "Healthy life expectancy","Generosity", "Conflict cases and Covid-19"])
 if xaxis_select == "Conflict cases and Covid-19":
     conflict = pd.read_csv("conflict_data_mmr.csv")
@@ -689,13 +729,13 @@ if xaxis_select == "Conflict cases and Covid-19":
         st.pyplot()
 
     st.markdown("#### According to the figure,")
-    st.markdown("Generally, conflict rate stays the same, regardless of Covid-19 infection rate.")
+    st.markdown("Generally, conflict rate stays the same regardless of Covid-19 infection rate.")
 elif xaxis_select == "GDP per capita and Death rate":
     death_gdp_fig = sns.regplot(y=np.log(death_corr_df["Max death rates"]), x=death_corr_df["Logged GDP per capita"], scatter_kws={'alpha':0.5})
     death_gdp_fig.set_xlabel("GDP per capita(Economic output per person)", fontsize=9)
     death_gdp_fig.set_ylabel("Max death rates of countries", fontsize=9)
-    st.pyplot()
     st.markdown("Countries with higher GDP (More developed countries) have higher death rate due to Covid-19.")
+    st.pyplot()
 else:
     corr_fig = sns.regplot(y=np.log(corr_df["Max infection rates"]), x=corr_df[xaxis_select], scatter_kws={'alpha':0.5})
     corr_fig.set_xlabel(xaxis_select,fontsize=9)
