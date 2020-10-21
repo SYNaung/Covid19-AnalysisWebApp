@@ -16,6 +16,8 @@ import matplotlib.gridspec as gridspec
 #plot style
 plt.style.use("ggplot")
 
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 #pc or mobile
 pc_user = st.sidebar.checkbox("Show interactive graphs (recommended for pc users)", value=False)
 
