@@ -19,7 +19,7 @@ plt.style.use("ggplot")
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 #pc or mobile
-
+pc_user = st.sidebar.checkbox("Show interactive graphs (recommended for pc users)", value=False)
 
 
 #Header
@@ -287,7 +287,6 @@ def view_in_2D():
     st.text("Last updated: " + mm_last_updated.to_string(index=False))
     st.write(map2dst)
 
-pc_user = st.checkbox("Show interactive graphs (recommended for pc users)", value=False)
 
 #Statistics
 
