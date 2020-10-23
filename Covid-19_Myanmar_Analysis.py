@@ -390,7 +390,7 @@ if graph_select == "Total Cases":
 elif graph_select == "Daily Cases":
     new_cases = confirmedMM["Cases"].diff()
     st.text("Last updated: " + (confirmedMM["Date"][-1:].to_string(index=False)))
-    days_ago = st.slider("Days ago", 0, 60)
+    days_ago = st.slider("Days ago", 0, 60, 20)
     if pc_user==True:
         if days_ago==0: title=" (All time)"
         else: title="("+str(days_ago)+" days ago)"
