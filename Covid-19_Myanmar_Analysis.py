@@ -19,34 +19,8 @@ plt.style.use("ggplot")
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 #pc or mobile
-pc_user = st.sidebar.checkbox("Show interactive graphs (recommended for pc users)", value=False)
 
-#music
-playlist = ["playlist/Aerosmith - I don't want to miss a thing.mp3",
-            "playlist/Clairo, Peter Cottontale - Softly.mp3",
-            "playlist/Harry Styles - Meet Me In The Hallway.mp3",
-            "playlist/Kings of Convenience - Boat Behind.mp3",
-            "playlist/Kiss - I Was Made For Lovin' You.mp3",
-            "playlist/Leonard Cohen - The Future.mp3",
-            "playlist/My Chemical Romance - Helena.mp3",
-            "playlist/Oasis - Live Forever.mp3",
-            "playlist/Pink Floyd - Coming Back To Life.mp3",
-            'playlist/Simon & Garfunkel - El Condor Pasa (If I Could).mp3',
-            "playlist/Arcitc Monkeys - Old Yellow Bricks.mp3",
-            "playlist/Beastie Boys - Sabotage.mp3",
-            "playlist/Derek & The Dominos - Layla.mp3",
-            "playlist/Fleetwood Mac - Dreams.mp3",
-            "playlist/John Paesano -  Subway Feels.mp3",
-            "playlist/My Chemical Romance - Party Poison.mp3",
-            "playlist/Paramore - Hard Times.mp3",
-            "playlist/Red Hot Chili Peppers - Can't Stop.mp3",
-            "playlist/The Alan Parsons Project - Eye in the Sky.mp3",
-            "playlist/The Rolling Stones - Miss You.mp3"]
-st.sidebar.markdown("### You can listen to music while scrolling!")
 
-song_no = random.randint(0,19)
-st.sidebar.text(re.sub("playlist/","",playlist[song_no]))
-st.sidebar.audio(playlist[song_no])
 
 #Header
 st.title("Covid-19 Myanmar Analysis")
@@ -313,7 +287,7 @@ def view_in_2D():
     st.text("Last updated: " + mm_last_updated.to_string(index=False))
     st.write(map2dst)
 
-
+pc_user = st.checkbox("Show interactive graphs (recommended for pc users)", value=False)
 
 #Statistics
 
@@ -733,13 +707,13 @@ if xaxis_select == "Conflict cases and Covid-19":
         st.pyplot()
 
     st.markdown("#### According to the figure,")
-    st.markdown("Generally, conflict rate stays the same regardless of Covid-19 infection rate.")
+    st.markdown("Generally, conflict rate stays the same, regardless of Covid-19 infection rate.")
 elif xaxis_select == "GDP per capita and Death rate":
     death_gdp_fig = sns.regplot(y=np.log(death_corr_df["Max death rates"]), x=death_corr_df["Logged GDP per capita"], scatter_kws={'alpha':0.5})
     death_gdp_fig.set_xlabel("GDP per capita(Economic output per person)", fontsize=9)
     death_gdp_fig.set_ylabel("Max death rates of countries", fontsize=9)
-    st.markdown("Countries with higher GDP (More developed countries) have higher death rate due to Covid-19.")
     st.pyplot()
+    st.markdown("Countries with higher GDP (More developed countries) have higher death rate due to Covid-19.")
 else:
     corr_fig = sns.regplot(y=np.log(corr_df["Max infection rates"]), x=corr_df[xaxis_select], scatter_kws={'alpha':0.5})
     corr_fig.set_xlabel(xaxis_select,fontsize=9)
