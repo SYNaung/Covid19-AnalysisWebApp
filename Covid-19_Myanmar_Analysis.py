@@ -67,7 +67,7 @@ try:
     today_confirmed = (confirmedMM["Cases"][len(confirmedMM["Cases"])-1]) - (confirmedMM["Cases"][len(confirmedMM["Cases"])-2])
     today_recovered = (recoveredMM["Cases"][len(recoveredMM["Cases"])-1]) - (recoveredMM["Cases"][len(recoveredMM["Cases"])-2])
     today_death = (deathMM["Cases"][len(deathMM["Cases"])-1]) - (deathMM["Cases"][len(deathMM["Cases"])-2])
-    st.subheader("Today("+ str(confirmedMM["Date"][-1])+ ")")
+    st.subheader("Today")
     st.markdown("#### Cases: "+str(today_confirmed)+" , Recovered: "+str(today_recovered)+ " , Death: "+str(today_death))
     #st.markdown("#### Recovered: "+str(today_recovered))
     #st.markdown("#### Death: "+str(today_death))
